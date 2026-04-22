@@ -5,8 +5,8 @@
 #
 ##############################################################
 
-#TODO: Fill up the contents below in order to reference your assignment 3 git contents
-AESD_ASSIGNMENTS_VERSION = '8869ae7340dbf38d71731bba35e5d0eb4746f031'
+# Points to the commit hash which adds the start-stop-daemon, necessary for assignment-5-part-2.
+AESD_ASSIGNMENTS_VERSION = '3dfdbfb100d5bde2a0483f7918fee93592a80726'
 # Note: Be sure to reference the *ssh* repository URL here (not https) to work properly
 # with ssh keys and the automated build/test system.
 # Your site should start with git@github.com:
