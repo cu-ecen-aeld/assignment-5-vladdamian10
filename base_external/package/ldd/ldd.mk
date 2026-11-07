@@ -15,5 +15,10 @@ LDD_SITE_METHOD = git
 LDD_GIT_SUBMODULES = YES
 LDD_MODULE_SUBDIRS = misc-modules scull
 
+define LDD_INSTALL_TARGET_CMDS
+    $(INSTALL) -D -m 0755 $(@D)/misc-modules/module-load $(TARGET_DIR)/sbin/module-load
+    $(INSTALL) -D -m 0755 $(@D)/misc-modules/module-unload $(TARGET_DIR)/sbin/module-unload
+endef
+
 $(eval $(kernel-module))
 $(eval $(generic-package))
