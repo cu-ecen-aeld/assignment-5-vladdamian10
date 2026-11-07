@@ -4,16 +4,42 @@ case "$1" in
     start)
         echo "Loading LDD modules..."
 
-        # Loading scull and misc-modules
-        /sbin/module_load scull
-        /sbin/module_load faulty
+        # Update kernel module dependency list
+	depmod -a
+
+        # Loading scull and faulty
+        modprobe scull
+
+        major=$(awk '$2=="scull" {print $1}' /proc/devices)
+        if [ ! -z "$major" ]; then
+            rm -f /dev/scull0
+            mknod /dev/scull0 c $major 0
+            chgrp $group /dev/scull0
+            chmod 664 /dev/scull0
+            echo "/dev/scull0 with major number $major"
+        else
+            echo "Error: scull major number not found in /prov/devices/"
+        fi
+
+        modprobe faulty
+        major=$(awk '$2=="faulty" {print $1}' /proc/devices)
+        if [ ! -z "$major" ]; then
+            rm -f /dev/faulty
+            mknod /dev/faulty c $major 0
+            chgrp $group /dev/faulty
+            chmod 664 /dev/faulty
+            echo "/dev/faulty with major number $major"
+        else
+            echo "Error: faulty major number not found in /proc/devices/"
+        fi
+
         modprobe hello
         ;;
     stop)
         echo "Unloading LDD modules..."
 
-        module_unload scull
-        module_unload faulty
+        rmmod scull
+        rmmod faulty
         rmmod hello || exit 1
         ;;
     *)
