@@ -1,0 +1,23 @@
+#!/bin/sh
+
+case "$1" in
+    start)
+        echo "Loading LDD modules..."
+
+        # Loading scull and misc-modules
+        /sbin/module_load scull
+        /sbin/module_load faulty
+        modprobe hello
+        ;;
+    stop)
+        echo "Unloading LDD modules..."
+
+        module_unload scull
+        module_unload faulty
+        rmmod hello || exit 1
+        ;;
+    *)
+        exit 1
+        ;;
+esac
+
